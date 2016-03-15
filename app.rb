@@ -1,9 +1,3 @@
-require 'sinatra'
-require 'stripe'
-require 'json'
-require "dotenv"
-Dotenv.load
-
 Stripe.api_key = ENV['STRIPE_API_KEY']
 
 get '/' do
