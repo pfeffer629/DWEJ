@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>American Prospect</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Latest compiled and minified Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <!-- inputMask -->
+    <script src="js/inputmask.js"></script>
+    <script src="js/jquery.inputmask.js"></script>
+    <script src="js/jquery.payment.js"></script>
+    
+    <!-- Zip Lookup -->
+    <script src="js/zip-lookup.js"></script>
+    
+    <!-- Stripe.js -->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+      Stripe.setPublishableKey('pk_test_PgLD8CZIRyNqAG37h4GUcPSu');
+
+      var stripeResponseHandler = function(status, response) {
+        var $form = $('#payment-form');
+
+        if (response.error) {
+          console("error")
+          console.log(response.error)
+          // Show the errors on the form
+          $form.find('.payment-errors').text(response.error.message);
+          $form.find('button').prop('disabled', false);
+        } else {
+          console.log("not error")
+          console.log(response)
+          // token contains id, last4, and card type
+          var token = response.id;
+          // Insert the token into the form so it gets submitted to the server
+          $form.append($('<input type="hidden" name="dollarAmount" />').val(dollarAmount));
+          $form.append($('<input type="hidden" name="firstName" />').val(firstName));
+          $form.append($('<input type="hidden" name="lastName" />').val(lastName));
+          $form.append($('<input type="hidden" name="addressLine1" />').val(addressLine1));
+          $form.append($('<input type="hidden" name="addressLine2" />').val(addressLine2));
+          $form.append($('<input type="hidden" name="zipCode" />').val(zipCode));
+          $form.append($('<input type="hidden" name="city" />').val(city));
+          $form.append($('<input type="hidden" name="homePhone" />').val(homePhone));
+          $form.append($('<input type="hidden" name="state" />').val(state));
+
+          $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+
+          // and re-submit
+          $form.get(0).submit();
+        }
+      };
+
+      jQuery(function($) {
+        $('#payment-form').submit(function(e) {
+          var $form = $("#payment-form");
+
+          // // Disable the submit button to prevent repeated clicks
+          $form.find('button').prop('disabled', true);
+
+          // Stripe.card.createToken($form, stripeResponseHandler);
+
+          // // Prevent the form from submitting with the default action
+          // return false;
+
+          expiration = $('.cc-exp').payment('cardExpiryVal');
+
+          console.log($('.cc-cvc').val())
+          Stripe.card.createToken({
+            number: $('.cc-number').val(),
+            cvc: $('.cc-cvc').val(),
+            exp_month: (expiration.month || 0),
+            exp_year: (expiration.year || 0)
+          }, stripeResponseHandler);
+          return false;
+        });
+      });
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+  </head>
+  <body>
+    <div class="content-container">
+      <div class="left-container">
+        <div class="left-background">
+        </div>
+        <div class="left-text">
+          The American Prospect is an independent, non-profit media organization dedicated to improving the national conversation about the day's most pressing issues, informing and engaging the public, and inspiring smart, just policy. One of the challenges the non-profit American Prospect faces is knowing what support we can count on—what we can make plans around. We could not exist without your support. We believe this model is vital in sustaining real journalism: it fosters independence, invests readers in the work that is done, and keeps journalists accountable to individuals.
+
+          We appreciate your support of the Prospect's influential brand of progressive journalism!
+        </div>
+      </div>
+
+      <!-- Start Right Container -->    
+      <div class="right-container">
+        <ul class="header-nav">
+          <li><div>Amount</div><img src="img/arrow_icon.png"/></li>
+          <li><div>Details</div><img src="img/arrow_icon.png"/></li>
+          <li><div>Payment</div></li>
+        </ul>
+
+        <!-- Start Amount Container -->
+        <div class="amount-container">
+          <div class="container-header">
+            Take future action with a single click.
+          </div>
+          <label><input type="radio" name="dollarAmount" value="20">$20</input></label>
+          <label><input type="radio" name="dollarAmount" value="35">$35</input></label>
+          <label><input type="radio" name="dollarAmount" value="50">$50</input></label>
+          <br>
+          <label><input type="radio" name="dollarAmount" value="100">$100</input></label>
+          <label><input type="radio" name="dollarAmount" value="250">$250</input></label>
+          <label><input type="radio" name="dollarAmount" value="500">$500</input></label>
+          <br>
+          <label><input type="radio" name="dollarAmount" value="2500">$2500</input></label>
+          <label class="wide-dollar-amount"><input class="editable-value" type="radio" name="dollarAmount" value=""><input class="editable-amount" type="number" placeholder="0.00"></input></label>
+          <br>
+          <input class="amount-submit" type="button" value="NEXT STEP"/>
+        </div>
+        <!-- End Amount Container -->
+
+        <!-- Start Details Container -->
+        <div class="details-container">
+          <div class="container-header">
+            Please enter your details
+          </div>
+          <form class="details">
+            <div class="field-container">
+              <label class="field-label">First Name</label>
+              <div class="input-container">
+                <input type="text" name="firstName" placeholder="First Name"/>
+              </div>
+            </div>
+            <div class="field-container">
+              <label class="field-label">Last Name</label>
+              <div class="input-container">
+                <input type="text" name="lastName" placeholder="Last Name"/>
+              </div>
+            </div>
+            <br>
+            <div class="field-container">
+              <label class="field-label">Address Line 1</label>
+              <div class="input-container">
+                <input type="text" name="addressLine1" placeholder="Address Line 1"/>
+              </div>
+            </div>
+            <div class="field-container">
+              <label class="field-label">Address Line 2</label>
+              <div class="input-container">
+                <input type="text" name="addressLine2" placeholder="Address Line 2"/>
+              </div>
+            </div>
+            <br>
+            <div class="field-container">
+              <label class="field-label">Zip Code</label>
+              <div class="input-container">
+                <input type="text" class="zip-lookup-field-zipcode" maxlength="5" name="zipCode" placeholder="Zip/Postal Code"/>
+              </div>
+            </div>
+            <div class="field-container">
+              <label class="field-label">City</label>
+              <div class="input-container">
+                <input type="text" class='zip-lookup-field-city' name="city" placeholder="City"/>
+              </div>
+            </div>
+            <br>
+            <div class="field-container absolute">
+              <select class="zip-lookup-field-state" name="state">
+                <option value="" disabled selected>State or Province</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+            <div class="field-container last-details-field">
+              <label class="field-label">Home Phone</label>
+              <div class="input-container">
+                <input type="text" name="homePhone" placeholder="Home Phone"/>
+              </div>
+            </div>
+            <br>
+            <input class="details-back-button back-button" type="button" value="BACK"/>
+            <input class="next-step-button" type="submit" value="NEXT STEP"/>
+          </form>
+        </div>
+        <!-- End Details Container -->
+          
+        <!-- Begin Payment Container -->
+        <div class="payment-container">
+          <div class="container-header">
+            Please enter your details
+          </div>
+          <form class="payment" action="/" method="POST" id="payment-form">
+            <label><input class="wide-payment-field" name="email" type="email" required="true" placeholder="Email"/></label>
+            <br>
+            <label><input class="wide-payment-field cc-number" data-stripe="number" name="cardNumber" type="text" placeholder="Card Number"/></label>
+            <br>
+            <label><input class="margin-right-field cc-exp" name="expiration" type="text" placeholder="MM/YY"/></label>
+            <label class="last-payment-field"><input class="cc-cvc" type="text" data-stripe="cvc" name="cvc"placeholder="CVC"/></label>
+            <br>
+            <input class="payment-back-button back-button" type="button" value="BACK"/>
+            <input class="donate-button" type="submit" value="DONATE"/>
+          </form>
+        </div>
+        <!-- End Payment Container -->
+      </div>
+      <!-- End Right Container -->
+    </div>
+    <!-- End Content Container -->
+  </body>
+</html> 

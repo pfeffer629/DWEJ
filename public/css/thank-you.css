@@ -1,0 +1,81 @@
+#thank-you-page {
+  font-size: 'HelveticaNeue';
+  max-width: 100%;
+  overflow-x: hidden;
+}
+#thank-you-page .thank-you-hero {
+  background-color: green;
+  background-image: url('../img/thank-you-hero.jpg');
+  background-size: cover;
+  background-position: center center;
+  display: table;
+  line-height: 1.4;
+  height: 100vh;
+  width: 100%;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text {
+  color: #fff;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-header {
+  font-size: 9vw;
+  font-weight: 500;
+}
+@media only screen and (max-width: 768px) {
+  #thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-header {
+    font-size: 8vh;
+  }
+}
+@media only screen and (max-width: 480px) {
+  #thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-header {
+    font-size: 14.4vw;
+  }
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-subtext {
+  font-size: 2vw;
+  margin: 0;
+  padding: 60px 0;
+}
+@media only screen and (max-width: 768px) {
+  #thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-subtext {
+    font-size: 3.6vh;
+    padding: 4.2vh 0;
+  }
+}
+@media only screen and (max-width: 480px) {
+  #thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-hero-subtext {
+    font-size: 6.4vw;
+    padding: 7.7vw 0;
+  }
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social {
+  display: inline-block;
+  margin: 0 auto;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li {
+  float: left;
+  height: 48px;
+  width: 48px;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-facebook {
+  background: url(../img/thank-you-facebook-sprite.png) no-repeat 7.353% 50%;
+  margin-right: 20px;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-facebook:hover {
+  background: url(../img/thank-you-facebook-sprite.png) no-repeat 92.647% 50%;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-twitter {
+  background: url(../img/thank-you-twitter-sprite.png) no-repeat 7.353% 50%;
+  margin-right: 20px;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-twitter:hover {
+  background: url(../img/thank-you-twitter-sprite.png) no-repeat 92.647% 50%;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-instagram {
+  background: url(../img/thank-you-instagram-sprite.png) no-repeat 7.353% 50%;
+}
+#thank-you-page .thank-you-hero .thank-you-hero-text .thank-you-social li.thank-you-instagram:hover {
+  background: url(../img/thank-you-instagram-sprite.png) no-repeat 92.647% 50%;
+}
